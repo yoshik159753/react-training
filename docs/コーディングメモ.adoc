@@ -1,0 +1,31 @@
+= コーディングメモ
+
+== IE11 対応
+
+* https://create-react-app.dev/docs/supported-browsers-features/[supported-browsers-features]
+
+[source,bash]
+.インストール
+----
+npm install react-app-polyfill
+----
+
+[source,javascript]
+.index.jsに追記
+----
+// src/index.js の先頭行に追加する
+import 'react-app-polyfill/ie11';
+import 'react-app-polyfill/stable';
+----
+
+[source,json]
+.package.json 書き換え
+----
+"browserslist": {
+  "development": [
+    ">0.2%",
+    "not dead",
+    "not op_mini all"
+  ]
+}
+----
