@@ -9,7 +9,7 @@ function App() {
 
   const handleHealthCheck = async () => {
     try {
-      const { data } = await axios.get('https://young-hollows-79466.herokuapp.com/api/v1/healthcheck');
+      const { data } = await axios.get(`${process.env.REACT_APP_FLASKR_URL}/v1/healthcheck`);
       setReadDatetime(data.read_datetime)
       setWriteDatetime(data.write_datetime)
     } catch (err) {
