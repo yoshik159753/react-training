@@ -1,5 +1,15 @@
 = コーディングメモ
 
+== 参照資料
+
+|===
+|内容 |資料 |リポジトリ
+
+|セッションを用いたログイン管理
+|https://www.udemy.com/course/nextjs-react-node-aws-mern-lms-elearning-udemy-clone/[edemy のセクション5および6]
+|https://gitlab.com/YoshiK159753/edemy
+|===
+
 == 絶対パスによるインポート
 
 * https://create-react-app.dev/docs/importing-a-component#absolute-imports[Absolute Imports]
@@ -14,6 +24,33 @@
   },
   "include": ["src"]
 }
+----
+
+== IE11 対応(axios)
+
+* https://s8a.jp/no-cache-using-ajax-with-ie11[IE11でAjaxを利用する際にキャッシュされないようにする方法]
+
+何も考えずに IE11 で axios を使うとキャッシュの値が返ってくるため期待した動作とならない。
+回避するには URL のクエリパラメタに `?_=[タイムスタンプ]` を追加してキャッシュが効かないようにするとよいらしい。
+
+そこで axios の場合はリクエスト時の Interceptors でタイムスタンプを追加する。
+Interceptors の記載箇所は要検討だが、ひとまずトップレベルコンポーネントで処理させればよいのでは。。
+
+[source,javascript]
+----
+axios.interceptors.request.use(function (config) {
+  if (typeof config.params === 'undefined') {
+    config.params = {};
+  }
+  if (typeof config.params === 'object') {
+    if (typeof URLSearchParams === 'function' && config.params instanceof URLSearchParams)
+      config.params.append('_', Date.now());
+    else
+      config.params._ = Date.now();
+  }
+
+  return config;
+});
 ----
 
 == IE11 対応
