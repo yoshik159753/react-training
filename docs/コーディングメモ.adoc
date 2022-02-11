@@ -1,5 +1,21 @@
 = コーディングメモ
 
+== 絶対パスによるインポート
+
+* https://create-react-app.dev/docs/importing-a-component#absolute-imports[Absolute Imports]
+
+`package.json` と同じ階層に `jsconfig.json` を置き下記を追加。
+
+[source,json]
+----
+{
+  "compilerOptions": {
+    "baseUrl": "src"
+  },
+  "include": ["src"]
+}
+----
+
 == IE11 対応
 
 * https://create-react-app.dev/docs/supported-browsers-features/[supported-browsers-features]
