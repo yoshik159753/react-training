@@ -10,6 +10,44 @@
 |https://gitlab.com/YoshiK159753/edemy
 |===
 
+== コードフォーマット
+
+* ref. https://www.digitalocean.com/community/tutorials/how-to-format-code-with-prettier-in-visual-studio-code-ja[Visual Studio CodeでPrettierを使用してコードをフォーマットする方法]
+* ref. https://prettier.io/docs/en/options.html[Prettier - Options]
+* ref. https://qiita.com/takeshisakuma/items/bbb2cd2f1c65de70e363[.prettierrc (Qiita記事のオプション一覧日本語版)]
+
+PJ に Prettier をインストール。
+
+[source,bash]
+----
+npm install prettier -D --save-exact
+----
+
+(vscode で)フォーマッターの指定と、保存時のフォーマットを有効化。
+
+[source,json]
+.settings.json
+----
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true
+}
+----
+
+`.prettierrc.json` でフォーマット方法を指定。
+格納先は `package.json` と同じ階層。
+
+[source,json]
+..prettierrc.json
+----
+{
+  "trailingComma": "es5",
+  "tabWidth": 2,
+  "semi": true,
+  "singleQuote": false
+}
+----
+
 == 環境変数の読み込みについて
 
 `REACT_APP_XXX` のように `REACT_APP_` のプレフィクスが必要。

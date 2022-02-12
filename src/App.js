@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
-import logo from 'logo.svg';
-import 'App.css';
+import logo from "logo.svg";
+import "App.css";
 
 function App() {
   const [readDatetime, setReadDatetime] = useState("-");
@@ -9,19 +9,27 @@ function App() {
 
   const handleHealthCheck = async () => {
     try {
-      const { data } = await axios.get(`${process.env.REACT_APP_FLASKR_URL}/v1/healthcheck`);
-      setReadDatetime(data.read_datetime)
-      setWriteDatetime(data.write_datetime)
+      const { data } = await axios.get(
+        `${process.env.REACT_APP_FLASKR_URL}/v1/healthcheck`
+      );
+      setReadDatetime(data.read_datetime);
+      setWriteDatetime(data.write_datetime);
     } catch (err) {
       console.error(err);
     }
-  }
+  };
 
   return (
     <div className="App">
       <header className="App-header">
         <div>
-          <button type="button" className="btn btn-primary" onClick={handleHealthCheck}>health check!</button>
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={handleHealthCheck}
+          >
+            health check!
+          </button>
 
           <table className="table table-light table-sm mt-3">
             <thead>
@@ -39,7 +47,7 @@ function App() {
           </table>
         </div>
 
-        <div className='mt-5'>
+        <div className="mt-5">
           <img src={logo} className="App-logo" alt="logo" />
           <p>
             Edit <code>src/App.js</code> and save to reload.
