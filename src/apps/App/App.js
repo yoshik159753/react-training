@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import logo from "logo.svg";
-import "App.css";
+import "apps/App/App.css";
 
 function App() {
   const [readDatetime, setReadDatetime] = useState("-");
