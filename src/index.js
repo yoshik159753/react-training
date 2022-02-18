@@ -5,14 +5,13 @@ import "react-app-polyfill/stable";
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import reportWebVitals from "reportWebVitals";
-
-import "index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
+import "index.css";
+import reportWebVitals from "reportWebVitals";
 import { GlobalContext } from "context";
 import App from "apps/App/App";
-import Flaskr from "apps/flaskr/index";
+import Flaskr from "apps/flaskr/route";
 
 ReactDOM.render(
   <React.StrictMode>

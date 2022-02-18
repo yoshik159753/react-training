@@ -1,0 +1,13 @@
+.pageHeader {
+  border-bottom: 1px solid lightgray;
+  display: flex;
+  align-items: flex-end;
+}
+
+.pageTitle {
+  font-family: serif;
+  color: #377ba8;
+  font-size: 1.5em;
+  flex: auto;
+  margin: 1rem 0 0.25rem 0;
+}
