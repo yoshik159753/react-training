@@ -1,0 +1,18 @@
+.title {
+  font-family: serif;
+  color: #377ba8;
+  flex: auto;
+  margin: 1rem 0 0.25rem 0;
+  font-size: 1.5em;
+}
+
+.about {
+  color: slategray;
+  font-style: italic;
+}
+
+.body {
+  white-space: pre-line;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+}

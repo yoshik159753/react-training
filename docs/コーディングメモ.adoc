@@ -5,6 +5,14 @@
 |===
 |内容 |資料 |リポジトリ
 
+|ルーティングコンポーネント(ログイン状態に応じたルーティング)
+|https://www.udemy.com/course/nextjs-react-node-aws-mern-lms-elearning-udemy-clone/[edemy のセクション27: Wraper component user route]
+|https://gitlab.com/YoshiK159753/edemy
+
+|react router
+|https://www.udemy.com/course/react-the-complete-guide-incl-redux/[react-complete-guide のセクション20: Building a Multi-Page SPA with React Router]
+|https://gitlab.com/YoshiK159753/react-complete-guide-code
+
 |セッションを用いたログイン管理
 |https://www.udemy.com/course/nextjs-react-node-aws-mern-lms-elearning-udemy-clone/[edemy のセクション5および6]
 |https://gitlab.com/YoshiK159753/edemy

@@ -1,0 +1,45 @@
+.background {
+  background-color: #eee;
+  min-height: 100vh;
+  padding-top: 1rem;
+}
+
+.body {
+  background-color: #fff;
+  padding-bottom: 0.25rem; /* padding による margin 相殺対策 */
+}
+
+.nav {
+  background: lightgray;
+  display: flex;
+  align-items: center;
+  padding: 0 0.5rem;
+  margin-left: -15px;
+  margin-right: -15px;
+}
+
+.nav h1 {
+  font-family: serif;
+  color: #377ba8;
+  font-size: 1.5em;
+  flex: auto;
+  margin: 0;
+}
+
+.nav ul {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav ul li a {
+  color: #377ba8;
+  text-decoration: underline;
+}
+
+.nav ul li a,
+.nav ul li span {
+  display: block;
+  padding: 0.5rem;
+}
