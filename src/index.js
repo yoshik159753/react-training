@@ -4,16 +4,25 @@ import "react-app-polyfill/stable";
 
 import React from "react";
 import ReactDOM from "react-dom";
-import "index.css";
-import App from "App";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import reportWebVitals from "reportWebVitals";
+
+import "index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+
 import { GlobalContext } from "context";
+import App from "apps/App/App";
+import Flaskr from "apps/flaskr/index";
 
 ReactDOM.render(
   <React.StrictMode>
     <GlobalContext>
-      <App />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<App />} />
+          <Route path="/flaskr" element={<Flaskr />} />
+        </Routes>
+      </BrowserRouter>
     </GlobalContext>
   </React.StrictMode>,
   document.getElementById("root")
