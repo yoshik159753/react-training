@@ -1,7 +1,34 @@
+import { createContext, useReducer } from "react";
 import axios from "axios";
 
-// global context
-const GlobalContext = ({ children }) => {
+const GlobalContext = createContext();
+
+const intialGlobalState = {
+  user: null,
+};
+
+const globalContextReducer = (state, action) => {
+  switch (action.type) {
+    case "LOGIN":
+      return { ...state, user: action.payload };
+    case "LOGOUT":
+      return { ...state, user: null };
+    default:
+      return state;
+  }
+};
+
+const GlobalContextProvider = ({ children }) => {
+  const [state, dispatch] = useReducer(globalContextReducer, intialGlobalState);
+
+  // TODO: リロードの復帰対応。ひとまずは不要。
+  // useEffect(() => {
+  //   dispatch({
+  //     type: "LOGIN",
+  //     payload: JSON.parse(window.localStorage.getItem("user")),
+  //   });
+  // }, []);
+
   axios.interceptors.request.use(
     (config) => {
       if (typeof config.params === "undefined") {
@@ -9,6 +36,7 @@ const GlobalContext = ({ children }) => {
       }
       if (typeof config.params === "object") {
         // URL クエリパラメタにタイムスタンプを追加する(IE11対応)
+        // ref. https://s8a.jp/no-cache-using-ajax-with-ie11
         if (
           typeof URLSearchParams === "function" &&
           config.params instanceof URLSearchParams
@@ -41,7 +69,11 @@ const GlobalContext = ({ children }) => {
     }
   );
 
-  return <>{children}</>;
+  return (
+    <GlobalContext.Provider value={{ state, dispatch }}>
+      {children}
+    </GlobalContext.Provider>
+  );
 };
 
-export { GlobalContext };
+export { GlobalContext, GlobalContextProvider };

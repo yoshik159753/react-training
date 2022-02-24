@@ -9,20 +9,20 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import "index.css";
 import reportWebVitals from "reportWebVitals";
-import { GlobalContext } from "context";
+import { GlobalContextProvider } from "context";
 import App from "apps/App/App";
 import Flaskr from "apps/flaskr/route";
 
 ReactDOM.render(
   <React.StrictMode>
-    <GlobalContext>
+    <GlobalContextProvider>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<App />} />
           <Route path="/flaskr" element={<Flaskr />} />
         </Routes>
       </BrowserRouter>
-    </GlobalContext>
+    </GlobalContextProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );
