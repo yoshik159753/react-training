@@ -18,8 +18,8 @@ ReactDOM.render(
     <GlobalContextProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<App />} />
-          <Route path="/flaskr" element={<Flaskr />} />
+          <Route path="/*" element={<App />} />
+          <Route path="/flaskr/*" element={<Flaskr />} />
         </Routes>
       </BrowserRouter>
     </GlobalContextProvider>

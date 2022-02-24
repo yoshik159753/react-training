@@ -22,7 +22,7 @@ const Base = ({ pageTitle, children }) => {
               <Link to="#">Register</Link>
             </li>
             <li>
-              <Link to="#">Log In</Link>
+              <Link to="/flaskr/login">Log In</Link>
             </li>
           </ul>
         </nav>

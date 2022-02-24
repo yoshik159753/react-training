@@ -47,6 +47,9 @@ const GlobalContextProvider = ({ children }) => {
           config.params._ = Date.now();
         }
       }
+      // cookie を使うため withCredentials を有効化
+      // TODO: 可能であれば、毎回設定ではなく１回初期化で対応したい(インスタンス化？)
+      config.withCredentials = true;
       return config;
     },
     (error) => {
