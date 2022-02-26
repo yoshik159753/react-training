@@ -43,3 +43,11 @@
   display: block;
   padding: 0.5rem;
 }
+
+.link {
+  cursor: pointer;
+  color: #377ba8;
+  text-decoration: underline;
+  display: block;
+  padding: 0.5rem;
+}
