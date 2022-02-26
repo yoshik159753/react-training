@@ -1,4 +1,4 @@
-import { createContext, useReducer } from "react";
+import { createContext, useEffect, useReducer } from "react";
 import axios from "axios";
 
 const GlobalContext = createContext();
@@ -21,13 +21,13 @@ const globalContextReducer = (state, action) => {
 const GlobalContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(globalContextReducer, intialGlobalState);
 
-  // TODO: リロードの復帰対応。ひとまずは不要。
-  // useEffect(() => {
-  //   dispatch({
-  //     type: "LOGIN",
-  //     payload: JSON.parse(window.localStorage.getItem("user")),
-  //   });
-  // }, []);
+  useEffect(() => {
+    // リロード復帰対応
+    dispatch({
+      type: "LOGIN",
+      payload: JSON.parse(window.localStorage.getItem("user")),
+    });
+  }, []);
 
   axios.interceptors.request.use(
     (config) => {
