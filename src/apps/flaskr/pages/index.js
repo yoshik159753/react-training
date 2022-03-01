@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import dayjs from "dayjs";
 
@@ -6,12 +6,17 @@ import Base from "apps/flaskr/templates/base";
 import style from "apps/flaskr/pages/index.module.css";
 import PageHeader from "apps/flaskr/components/pageHeader";
 import DefaultSpinner from "components/spinners/defaultSpinner";
+import { Link } from "react-router-dom";
+import { GlobalContext } from "context";
 
 const Index = () => {
   const pageTitle = "Posts";
 
   const [loading, setLoading] = useState(false);
   const [blogs, setBlogs] = useState([]);
+
+  const { state } = useContext(GlobalContext);
+  const { user } = state;
 
   useEffect(() => {
     getBlogs();
@@ -61,13 +66,15 @@ const Index = () => {
     return render("Empty!!!");
   }
 
-  const editLink = () => {
-    // TODO: ログイン中状態でeditボタンの出し分け処理
-    //   {% if g.user['id'] == blog['author_id'] %}
-    //   <a className="action" href="{{ url_for('blog.update', id=blog['id']) }}">Edit</a>
-    // {% endif %}
-
-    return <></>;
+  const editLink = (blog) => {
+    if (user == null || user.user_id !== blog.author_id) {
+      return;
+    }
+    return (
+      <Link className={style.action} to={`/flaskr/${blog.id}`}>
+        Edit
+      </Link>
+    );
   };
 
   // TODO: エラーメッセージはあとで検討
@@ -79,14 +86,14 @@ const Index = () => {
     blogs.map((blog, index) => (
       <div key={blog.id}>
         <article className="post">
-          <header>
+          <header className={style.header}>
             <div>
               <h1 className={style.title}>{blog.title}</h1>
               <div className={style.about}>
                 by {blog.username} on {dayjs(blog.created).format("YYYY-MM-DD")}
               </div>
             </div>
-            {editLink()}
+            {editLink(blog)}
           </header>
           <p className={style.body}>{blog.body}</p>
         </article>
