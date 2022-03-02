@@ -12,6 +12,7 @@ import reportWebVitals from "reportWebVitals";
 import { GlobalContextProvider } from "context";
 import App from "apps/App/App";
 import Flaskr from "apps/flaskr/route";
+import QrcodeReader from "apps/qrcodeReader";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -20,6 +21,7 @@ ReactDOM.render(
         <Routes>
           <Route path="/*" element={<App />} />
           <Route path="/flaskr/*" element={<Flaskr />} />
+          <Route path="/qrr/*" element={<QrcodeReader />} />
         </Routes>
       </BrowserRouter>
     </GlobalContextProvider>
