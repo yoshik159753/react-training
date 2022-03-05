@@ -1,9 +1,7 @@
+import jsQR from "jsqr";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 const QrcodeReader = () => {
-  const [count, setCount] = useState(0);
-  const previousTimeRef = useRef();
-
   const useAnimationFrame = (callback) => {
     const requestRef = useRef();
     const animate = useCallback(
@@ -23,94 +21,105 @@ const QrcodeReader = () => {
     }, [animate]);
   };
 
+  const videoParentRef = useRef(null);
+  const photoRef = useRef(null);
+
+  const [qrcodeData, setQrcodeData] = useState("No data!!!");
+
+  function drawLine(canvas, begin, end, color) {
+    canvas.beginPath();
+    canvas.moveTo(begin.x, begin.y);
+    canvas.lineTo(end.x, end.y);
+    canvas.lineWidth = 4;
+    canvas.strokeStyle = color;
+    canvas.stroke();
+  }
+
   useAnimationFrame((time) => {
-    if (previousTimeRef.current !== undefined) {
-      const deltaTime = time - previousTimeRef.current;
-      setCount((prevCount) => (prevCount + deltaTime * 0.01) % 100);
+    const width = 414;
+    const height = width / (16 / 9);
+
+    const video = videoParentRef.current.children[0];
+    const photo = photoRef.current;
+
+    if (video.readyState === video.HAVE_ENOUGH_DATA) {
+      photo.width = width;
+      photo.height = height;
+
+      const canvas = photo.getContext("2d");
+      canvas.drawImage(video, 0, 0, width, height);
+
+      const imageData = canvas.getImageData(0, 0, photo.width, photo.height);
+      const qrcode = jsQR(imageData.data, imageData.width, imageData.height, {
+        inversionAttempts: "dontInvert",
+      });
+
+      if (qrcode) {
+        drawLine(
+          canvas,
+          qrcode.location.topLeftCorner,
+          qrcode.location.topRightCorner,
+          "#FF3B58"
+        );
+        drawLine(
+          canvas,
+          qrcode.location.topRightCorner,
+          qrcode.location.bottomRightCorner,
+          "#FF3B58"
+        );
+        drawLine(
+          canvas,
+          qrcode.location.bottomRightCorner,
+          qrcode.location.bottomLeftCorner,
+          "#FF3B58"
+        );
+        drawLine(
+          canvas,
+          qrcode.location.bottomLeftCorner,
+          qrcode.location.topLeftCorner,
+          "#FF3B58"
+        );
+        setQrcodeData(qrcode.data);
+      } else {
+        setQrcodeData("QRCode is No Data!!!2");
+      }
     }
-    previousTimeRef.current = time;
   });
 
-  return <div>{Math.round(count)}</div>;
+  const getVideo = () => {
+    navigator.mediaDevices
+      .getUserMedia({ video: { width: 800, height: 600 } })
+      .then((stream) => {
+        let video = videoParentRef.current.children[0];
+        video.srcObject = stream;
+        video.play();
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
 
-  // const videoRef = useRef(null);
-  // const photoRef = useRef(null);
+  useEffect(() => {
+    getVideo();
+  }, [videoParentRef]);
 
-  // const [hasPhoto, setHasPhoto] = useState(false);
-
-  // const getVideo = () => {
-  //   navigator.mediaDevices
-  //     .getUserMedia({ video: { width: 1920, height: 1080 } })
-  //     .then((stream) => {
-  //       let video = videoRef.current;
-  //       video.srcObject = stream;
-  //       video.play();
-  //     })
-  //     .catch((err) => {
-  //       console.error(err);
-  //     });
-  // };
-
-  // const takePhoto = () => {
-  //   const width = 414;
-  //   const height = width / (16 / 9);
-
-  //   // let video = videoRef.current;
-  //   let photo = photoRef.current;
-
-  //   photo.width = width;
-  //   photo.height = height;
-
-  //   setHasPhoto(true);
-
-  //   // let ctx = photo.getContext("2d");
-  //   // ctx.drawImage(video, 0, 0, width, height);
-
-  //   streaming();
-  // };
-
-  // const streaming = () => {
-  //   if (!hasPhoto) {
-  //     return;
-  //   }
-  //   let photo = photoRef.current;
-  //   photo
-  //     .getContext("2d")
-  //     .drawImage(videoRef.current, 0, 0, photo.width, photo.height);
-  //   requestAnimationFrame(streaming);
-  // };
-
-  // const closePhoto = () => {
-  //   let photo = photoRef.current;
-  //   let ctx = photo.getContext("2d");
-
-  //   ctx.clearRect(0, 0, photo.width, photo.height);
-
-  //   setHasPhoto(false);
-  // };
-
-  // useEffect(() => {
-  //   getVideo();
-  // }, [videoRef]);
-
-  // const videoStyle = {
-  //   width: "100%",
-  //   maxWidth: "100%",
-  //   height: "auto",
-  // };
-
-  // return (
-  //   <>
-  //     <div className="camera">
-  //       <video ref={videoRef} style={videoStyle} />
-  //       <button onClick={takePhoto}>SNAP!</button>
-  //     </div>
-  //     <div className="result">
-  //       <canvas ref={photoRef} />
-  //       <button onClick={closePhoto}>CLOSE!</button>
-  //     </div>
-  //   </>
-  // );
+  return (
+    <>
+      <canvas ref={photoRef} />
+      <span>{qrcodeData}</span>
+      <div
+        ref={videoParentRef}
+        dangerouslySetInnerHTML={{
+          __html: `
+          <video
+            muted
+            autoplay
+            playsinline
+          />`,
+        }}
+      />
+    </>
+  );
 };
 
 export default QrcodeReader;
