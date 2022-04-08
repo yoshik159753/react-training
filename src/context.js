@@ -72,6 +72,16 @@ const GlobalContextProvider = ({ children }) => {
     }
   );
 
+  useEffect(() => {
+    const getCsrfToken = async () => {
+      const { data } = await axios.get(
+        `${process.env.REACT_APP_FLASKR_URL}/v1/csrf-token`
+      );
+      axios.defaults.headers["X-CSRF-TOKEN"] = data["csrf-token"];
+    };
+    getCsrfToken();
+  }, []);
+
   return (
     <GlobalContext.Provider value={{ state, dispatch }}>
       {children}
