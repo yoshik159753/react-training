@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import logo from "logo.svg";
 import "apps/App/App.css";
+import { Link } from "react-router-dom";
 
 function App() {
   const [readDatetime, setReadDatetime] = useState("-");
@@ -60,6 +61,11 @@ function App() {
           >
             Learn React
           </a>
+          <p>
+            <Link className="App-link" to={`/react-select/sample1`}>
+              React Select Sample1
+            </Link>
+          </p>
         </div>
       </header>
     </div>
